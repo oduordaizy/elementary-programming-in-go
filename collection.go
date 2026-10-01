@@ -52,6 +52,7 @@ func ZipString(s string) string {
 	return string(result)
 }
 
+
 func FindPrevPrime(nb int) int {
 	if nb < 2 {
 		return 0
@@ -162,4 +163,289 @@ func CamelToSnakeCase(s string) string {
 
 	return result
 }
+
+
+func LastWord(s string) string {
+	if s == "" {
+		return "\n"
+	}
+
+	i := len(s) - 1
+
+	for i >= 0 && s[i] == ' ' {
+		i--
+	}
+
+	if i < 0 {
+		return "\n"
+	}
+
+	end := i
+
+	for i >= 0 && s[i] != ' ' {
+		i--
+	}
+
+	return s[i+1:end+1] + "\n"
+}
+
+
+func RepeatAlpha(s string) string {
+	result := ""
+
+	for _, r := range s {
+		if r >= 'a' && r <= 'z' {
+			for i := 0; i < int(r-'a')+1; i++ {
+				result += string(r)
+			}
+		} else if r >= 'A' && r <= 'Z' {
+			for i := 0; i < int(r-'A')+1; i++ {
+				result += string(r)
+			}
+		} else {
+			result += string(r)
+		}
+	}
+
+	return result
+}
+
+
+package piscine
+
+func Gcd(a, b uint) uint {
+	if a == 0 || b == 0 {
+		return 0
+	}
+
+	for b != 0 {
+		a, b = b, a%b
+	}
+
+	return a
+}
+
+//cleanstr
+func main() {
+	if len(os.Args) != 2 {
+		fmt.Println()
+		return
+	}
+
+	input := os.Args[1]
+	var words []string
+	var currentWord []byte
+
+	// 2. Iterate through the string to extract words into a slice
+	for i := 0; i < len(input); i++ {
+		char := input[i]
+		if char == ' ' || char == '\t' {
+			// If we hit a space/tab and have collected a word, save it to the slice
+			if len(currentWord) > 0 {
+				words = append(words, string(currentWord))
+				currentWord = []byte{} // Reset for the next word
+			}
+		} else {
+			// Append character to the current word
+			currentWord = append(currentWord, char)
+		}
+	}
+
+	// Catch the last word if the string doesn't end with whitespace
+	if len(currentWord) > 0 {
+		words = append(words, string(currentWord))
+	}
+
+	// 3. If there are no words to display, print a newline and exit
+	if len(words) == 0 {
+		fmt.Println()
+		return
+	}
+
+	// 4. Build the final string by adding a single space between the words
+	var result string
+	for i := 0; i < len(words); i++ {
+		result += words[i]
+		if i < len(words)-1 {
+			result += " "
+		}
+	}
+
+	// 5. Print the result followed by a newline
+	fmt.Println(result)
+}
+
+
+//expandstr
+func main() {
+	if len(os.Args) != 2 {
+		return
+	}
+
+	s := os.Args[1]
+	word := false
+	first := true
+
+	for _, r := range s {
+		if r == ' ' || r == '\t' {
+			if word {
+				word = false
+			}
+		} else {
+			if !first && !word {
+				z01.PrintRune(' ')
+				z01.PrintRune(' ')
+				z01.PrintRune(' ')
+			}
+
+			z01.PrintRune(r)
+			word = true
+			first = false
+		}
+	}
+
+	if !first {
+		z01.PrintRune('\n')
+	}
+}
+
+func IsCapitalized(s string) bool {
+	if s == "" {
+		return false
+	}
+
+	newWord := true
+
+	for _, r := range s {
+		if r == ' ' || r == '\t' {
+			newWord = true
+		} else {
+			if newWord {
+				if r >= 'a' && r <= 'z' {
+					return false
+				}
+				newWord = false
+			}
+		}
+	}
+
+	return true
+}
+
+func Itoa(n int) string {
+	if n == 0 {
+		return "0"
+	}
+
+	result := ""
+
+	if n < 0 {
+		result = "-"
+		n = -n
+	}
+
+	for n > 0 {
+		digit := n % 10
+		result = string(rune('0'+digit)) + result
+		n /= 10
+	}
+
+	return result
+}
+
+func Printrevcomb() {
+	first := true
+
+	for i := 9; i >= 2; i-- {
+		for j := i - 1; j >= 1; j-- {
+			for k := j - 1; k >= 0; k-- {
+				if !first {
+					z01.PrintRune(',')
+					z01.PrintRune(' ')
+				}
+
+				z01.PrintRune(rune(i + '0'))
+				z01.PrintRune(rune(j + '0'))
+				z01.PrintRune(rune(k + '0'))
+
+				first = false
+			}
+		}
+	}
+
+	z01.PrintRune('\n')
+}
+
+func ThirdTimeIsACharm(str string) string {
+	result := ""
+
+	for i, r := range str {
+		if (i+1)%3 == 0 {
+			result += string(r)
+		}
+	}
+
+	return result + "\n"
+}
+
+func WeAreUnique(str1, str2 string) int {
+	if str1 == "" && str2 == "" {
+		return -1
+	}
+
+	count := 0
+
+	for i, r := range str1 {
+		found := false
+
+		for j, r2 := range str1 {
+			if i != j && r == r2 {
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			for _, r2 := range str2 {
+				if r == r2 {
+					found = true
+					break
+				}
+			}
+		}
+
+		if !found {
+			count++
+		}
+	}
+
+	for i, r := range str2 {
+		found := false
+
+		for j, r2 := range str2 {
+			if i != j && r == r2 {
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			for _, r2 := range str1 {
+				if r == r2 {
+					found = true
+					break
+				}
+			}
+		}
+
+		if !found {
+			count++
+		}
+	}
+
+	return count
+}
+
+
+
 
