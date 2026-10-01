@@ -115,3 +115,51 @@ func FromTo(from int, to int) string {
 	result += "\n"
 	return result
 }
+
+func CamelToSnakeCase(s string) string {
+	if s == "" {
+		return ""
+	}
+
+	// Validate camelCase
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+
+		// Only letters are allowed
+		if !((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+			return s
+		}
+
+		// Cannot end with a capital letter
+		if i == len(s)-1 && c >= 'A' && c <= 'Z' {
+			return s
+		}
+
+		// Two capital letters cannot be next to each other
+		if i > 0 &&
+			c >= 'A' && c <= 'Z' &&
+			s[i-1] >= 'A' && s[i-1] <= 'Z' {
+			return s
+		}
+	}
+
+	// Convert to snake_case
+	result := ""
+
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+
+		if c >= 'A' && c <= 'Z' {
+			if i > 0 {
+				result += "_"
+			}
+
+			c += 'a' - 'A'
+		}
+
+		result += string(c)
+	}
+
+	return result
+}
+
