@@ -664,6 +664,31 @@ func Reversesstrcap() {
 	}
 }
 
+
+func wdmatch() {
+	if len(os.Args) != 3 {
+		return
+	}
+
+	first := os.Args[1]
+	second := os.Args[2]
+
+	j := 0
+
+	for i := 0; i < len(second) && j < len(first); i++ {
+		if second[i] == first[j] {
+			j++
+		}
+	}
+
+	if j == len(first) {
+		for _, char := range first {
+			z01.PrintRune(char)
+		}
+		z01.PrintRune('\n')
+	}
+}
+
 func NotDecimal(dec string) string {
 	if dec == "" {
 		return "\n"
@@ -792,5 +817,47 @@ func Slice(a []string, nbrs ...int) []string {
 	}
 
 	return a[start:end]
+}
+
+
+func FifthAndSkip(str string) string {
+	if str == "" {
+		return "\n"
+	}
+
+	// Remove spaces
+	var cleaned []rune
+
+	for _, char := range str {
+		if char != ' ' {
+			cleaned = append(cleaned, char)
+		}
+	}
+
+	// Less than 5 characters
+	if len(cleaned) < 5 {
+		return "Invalid Input\n"
+	}
+
+	var result []rune
+	count := 0
+
+	for i := 0; i < len(cleaned); i++ {
+		result = append(result, cleaned[i])
+		count++
+
+		if count == 5 {
+			count = 0
+
+			// If there is another character, add a space
+			// and skip the next character.
+			if i+1 < len(cleaned) {
+				result = append(result, ' ')
+				i++
+			}
+		}
+	}
+
+	return string(result) + "\n"
 }
 
