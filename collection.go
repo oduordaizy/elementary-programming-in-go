@@ -664,6 +664,23 @@ func Reversesstrcap() {
 	}
 }
 
+func union() {
+	if len(os.Args) != 3 {
+		z01.PrintRune('\n')
+		return
+	}
+
+	seen := make(map[rune]bool)
+
+	for _, char := range os.Args[1] + os.Args[2] {
+		if !seen[char] {
+			z01.PrintRune(char)
+			seen[char] = true
+		}
+	}
+
+	z01.PrintRune('\n')
+}
 
 func wdmatch() {
 	if len(os.Args) != 3 {
