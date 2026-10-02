@@ -444,25 +444,46 @@ func WeAreUnique(str1, str2 string) int {
 	return count
 }
 
-//Add Primesum
-func main() {
-	// Check if the number of arguments is not 1
+func isPrime(n int) bool {
+	if n < 2 {
+		return false
+	}
+
+	for i := 2; i*i <= n; i++ {
+		if n%i == 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
+func AddPrimeSum() {
 	if len(os.Args) != 2 {
 		fmt.Println(0)
 		return
 	}
 
-	// Convert the argument to an integer
-	nb, err := strconv.Atoi(os.Args[1])
-	// If it's not a valid integer or not a positive number/zero, display 0
-	if err != nil || nb < 0 {
+	str := os.Args[1]
+	n := 0
+
+	for _, char := range str {
+		if char < '0' || char > '9' {
+			fmt.Println(0)
+			return
+		}
+
+		n = n*10 + int(char-'0')
+	}
+
+	if n <= 0 {
 		fmt.Println(0)
 		return
 	}
 
 	sum := 0
-	// Sum all prime numbers less than or equal to nb
-	for i := 2; i <= nb; i++ {
+
+	for i := 2; i <= n; i++ {
 		if isPrime(i) {
 			sum += i
 		}
@@ -471,17 +492,25 @@ func main() {
 	fmt.Println(sum)
 }
 
-// Helper function to check if a number is prime
-func isPrime(n int) bool {
-	if n <= 1 {
-		return false
+func Chunk(slice []int, size int) {
+	if size == 0 {
+		fmt.Println()
+		return
 	}
-	for i := 2; i*i <= n; i++ {
-		if n%i == 0 {
-			return false
+
+	result := [][]int{}
+
+	for i := 0; i < len(slice); i += size {
+		end := i + size
+
+		if end > len(slice) {
+			end = len(slice)
 		}
+
+		result = append(result, slice[i:end])
 	}
-	return true
+
+	fmt.Println(result)
 }
 
 func CanJump(arr []uint) bool {
