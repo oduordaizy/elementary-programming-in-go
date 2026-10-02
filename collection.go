@@ -1,3 +1,28 @@
+func Searchreplace() {
+	if len(os.Args) != 4 {
+		return
+	}
+
+	str := os.Args[1]
+	old := []rune(os.Args[2])
+	new := []rune(os.Args[3])
+
+	if len(old) != 1 || len(new) != 1 {
+		return
+	}
+
+	for _, char := range str {
+		if char == old[0] {
+			z01.PrintRune(new[0])
+		} else {
+			z01.PrintRune(char)
+		}
+	}
+
+	z01.PrintRune('\n')
+}
+
+
 func PrintMemory(arr [10]byte) {
 	// 1. Print the hexadecimal representation in chunks of 4 bytes per line
 	for i := 0; i < len(arr); i += 4 {
